@@ -2,11 +2,9 @@
 
 DescarGato:
 
-Este es mi primer proyecto, un software para el sistema operativo Windows que he creado especialmente para mi novia Suidelame ♥ 
-sencillo pero eficiente para descargar videos de múltiples 
-plataformas como Youtube, Instagram, Facebook, Tiktok, etc.
-
-Este software funciona como una interfaz gráfica para yt-dlp usando como complementos ffmpeg, solver, deno, curl-cffi y arias2c.
+Este es mi primer proyecto que he creado especialmente para mi novia Suidelame ♥, es un software para el sistema operativo Windows 
+sencillo pero eficiente para descargar videos de múltiples plataformas como Youtube, Instagram, Facebook, Tiktok, etc; 
+funciona como una interfaz gráfica para yt-dlp usando como complementos ffmpeg, solver, deno, curl-cffi y arias2c.
 
 Sólo deben instalarse python para poder abrir el archivo main.py, el solo se encarga de conseguir los complementos que necesita para funcionar,
 si lo quieren como un ejecutable .exe totalmente independiente en el sistema, ejecuten este comando:
