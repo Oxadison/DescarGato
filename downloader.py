@@ -721,72 +721,65 @@ def _launch_gui_updater(zip_path, log):
     script_path = temp_dir / "gatoupdater.py"
     script_code = """
 import sys, os, time, zipfile, shutil
-import tkinter as tk
-from tkinter import ttk
-from pathlib import Path
-import subprocess
 
 def run_update():
-    app_dir = Path(sys.argv[1])
-    zip_path = Path(sys.argv[2])
+    app_dir = sys.argv[1]
+    zip_path = sys.argv[2]
     exe_name = sys.argv[3]
 
-    for i in range(5, 0, -1):
-        lbl_status.config(text=f"Esperando cierre del programa principal... {i}s")
-        root.update()
-        time.sleep(1)
+    # Estilizar la consola de Windows
+    os.system("title DescarGato Updater")
+    os.system("color 0B") # Color Cyan (Aqua)
+    
+    print("==================================================")
+    print("           INSTALANDO NUEVA VERSION               ")
+    print("==================================================")
+    print("\\n[!] Esperando a que el programa principal se cierre...")
+    
+    # Tiempo para que el OS libere DescarGato.exe
+    time.sleep(4) 
 
     try:
-        lbl_status.config(text="Extrayendo y reemplazando archivos...", fg="#0000CC")
-        root.update()
-        
+        # TU IDEA: Borrado limpio de la carpeta interna antigua
+        internal_dir = os.path.join(app_dir, "_internal")
+        if os.path.exists(internal_dir):
+            print("[!] Limpiando archivos antiguos (_internal)...")
+            shutil.rmtree(internal_dir, ignore_errors=True)
+
+        print("[!] Extrayendo y reemplazando con la nueva version...")
         with zipfile.ZipFile(zip_path, 'r') as z:
             z.extractall(app_dir)
         
-        lbl_status.config(text="¡Actualización completada con éxito! Reiniciando...", fg="#008000")
-        root.update()
-        time.sleep(2)
+        os.system("color 0A") # Cambiar a Verde brillante
+        print("\\n[+] ¡Actualizacion completada con exito!")
+        print("[+] Iniciando DescarGato...")
+        time.sleep(2.5)
         
-        target_exe = app_dir / exe_name
-        os.startfile(str(target_exe))
+        # Lanzar el nuevo DescarGato.exe
+        target_exe = os.path.join(app_dir, exe_name)
+        os.startfile(target_exe)
+        
     except Exception as e:
-        lbl_status.config(text=f"Error Crítico: {str(e)}", fg="#CC0000")
-        root.update()
-        time.sleep(10)
-    finally:
-        root.destroy()
-        
-root = tk.Tk()
-root.title("DescarGato Updater")
-root.geometry("420x160") # Ventana más amplia
-root.configure(bg="#f0f0f0")
-root.resizable(False, False)
+        os.system("color 0C") # Cambiar a Rojo
+        print(f"\\n[X] ERROR CRITICO DURANTE LA ACTUALIZACION:")
+        print(f"    {e}")
+        print("\\nEsta ventana se cerrara en 15 segundos...")
+        time.sleep(15)
 
-x = (root.winfo_screenwidth() // 2) - (420 // 2)
-y = (root.winfo_screenheight() // 2) - (160 // 2)
-root.geometry(f"+{x}+{y}")
-
-tk.Label(root, text="Instalando Nueva Versión de DescarGato", font=("Helvetica", 11, "bold"), bg="#f0f0f0", fg="#333333").pack(pady=(15, 5))
-
-lbl_status = tk.Label(root, text="Preparando entorno...", font=("Helvetica", 9), bg="#f0f0f0", fg="#0000CC", wraplength=380, justify="center")
-lbl_status.pack(pady=5, fill=tk.X, px=10)
-
-progress = ttk.Progressbar(root, mode='indeterminate')
-progress.pack(fill=tk.X, padx=40, pady=10)
-progress.start(10)
-
-root.after(200, run_update)
-root.mainloop()
+if __name__ == '__main__':
+    run_update()
 """
     script_path.write_text(script_code, encoding="utf-8")
     
-    log("Iniciando actualizador gráfico. El programa se cerrará ahora.")
+    log("Iniciando actualizador. El programa se cerrará ahora.")
     python_exe = temp_py_dir / "python.exe"
+    
+    flags = subprocess.CREATE_NEW_CONSOLE if os.name == "nt" else 0
+    
     subprocess.Popen(
         [str(python_exe), str(script_path), str(APP_DIR), str(zip_path), "DescarGato.exe"],
-        creationflags=CREATE_NO_WINDOW
+        creationflags=flags
     )
-
 def check_main_app_update(log=print, prog=lambda p: None):
     log("Buscando actualizaciones del núcleo de DescarGato...")
     api_url = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
