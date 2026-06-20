@@ -711,17 +711,14 @@ def download_video(url, directory, progress_callback=None, download_format="best
 def _launch_gui_updater(zip_path, log):
     log("Preparando entorno seguro de actualización...")
     
-    # 1. Crear directorio temporal en Windows (%TEMP%)
     temp_dir = Path(tempfile.gettempdir()) / "GatoUpdaterEnv"
     shutil.rmtree(temp_dir, ignore_errors=True)
     _ensure_dir(temp_dir)
 
-    # 2. Copiar el entorno Python embebido para no bloquear el original
     temp_py_dir = temp_dir / "python"
     shutil.copytree(PY_EMBED_DIR, temp_py_dir)
 
-    # 3. Escribir el script gatoupdate.py dinámicamente
-    script_path = temp_dir / "gatoupdate.py"
+    script_path = temp_dir / "gatoupdater.py"
     script_code = """
 import sys, os, time, zipfile, shutil
 import tkinter as tk
@@ -776,7 +773,6 @@ root.mainloop()
 """
     script_path.write_text(script_code, encoding="utf-8")
     
-    # 4. Lanzar proceso independiente y desvinculado
     log("Iniciando actualizador gráfico. El programa se cerrará ahora.")
     python_exe = temp_py_dir / "python.exe"
     subprocess.Popen(
