@@ -12,10 +12,6 @@ Sólo debes instalar Python para poder abrir el archivo `main.py`; el programa s
 
 ### 📦 Versión Portable
 
-Si prefieres no instalar nada, puedes descargar la versión portable (.exe) aquí:
-
-[Descargar DescarGato.exe (Google Drive)](https://drive.google.com/file/d/1X0-u4GUS3p24lIp7QD-jok7QG-4lX5xE/view?usp=sharing)
-
 *Nota: La primera vez que abras el programa se descargarán los complementos necesarios.*
 
 ### ⚠️ Importante ⚠️
