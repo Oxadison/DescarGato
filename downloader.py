@@ -718,6 +718,11 @@ def _launch_gui_updater(zip_path, log):
     temp_py_dir = temp_dir / "python"
     shutil.copytree(PY_EMBED_DIR, temp_py_dir)
 
+    if getattr(sys, 'frozen', False):
+        real_root_dir = Path(sys.executable).parent
+    else:
+        real_root_dir = APP_DIR
+
     script_path = temp_dir / "gatoupdater.py"
     script_code = """
 import sys, os, time, zipfile, shutil
@@ -727,40 +732,49 @@ def run_update():
     zip_path = sys.argv[2]
     exe_name = sys.argv[3]
 
-    # Estilizar la consola de Windows
     os.system("title DescarGato Updater")
-    os.system("color 0B") # Color Cyan (Aqua)
+    os.system("color 0B")
     
     print("==================================================")
     print("           INSTALANDO NUEVA VERSION               ")
     print("==================================================")
     print("\\n[!] Esperando a que el programa principal se cierre...")
     
-    # Tiempo para que el OS libere DescarGato.exe
     time.sleep(4) 
 
     try:
-        # TU IDEA: Borrado limpio de la carpeta interna antigua
         internal_dir = os.path.join(app_dir, "_internal")
         if os.path.exists(internal_dir):
-            print("[!] Limpiando archivos antiguos (_internal)...")
+            print("[!] Eliminando carpeta '_internal' antigua...")
             shutil.rmtree(internal_dir, ignore_errors=True)
+            
+        bin_dir = os.path.join(app_dir, "bin")
+        if os.path.exists(bin_dir):
+            print("[!] Eliminando carpeta 'bin' antigua...")
+            shutil.rmtree(bin_dir, ignore_errors=True)
+
+        old_exe = os.path.join(app_dir, exe_name)
+        if os.path.exists(old_exe):
+            print(f"[!] Eliminando {exe_name} antiguo...")
+            try:
+                os.remove(old_exe)
+            except Exception as e:
+                print(f"[-] Nota: No se pudo eliminar el .exe previo, se intentara sobrescribir. ({e})")
 
         print("[!] Extrayendo y reemplazando con la nueva version...")
         with zipfile.ZipFile(zip_path, 'r') as z:
             z.extractall(app_dir)
         
-        os.system("color 0A") # Cambiar a Verde brillante
+        os.system("color 0A")
         print("\\n[+] ¡Actualizacion completada con exito!")
         print("[+] Iniciando DescarGato...")
         time.sleep(2.5)
         
-        # Lanzar el nuevo DescarGato.exe
         target_exe = os.path.join(app_dir, exe_name)
         os.startfile(target_exe)
         
     except Exception as e:
-        os.system("color 0C") # Cambiar a Rojo
+        os.system("color 0C")
         print(f"\\n[X] ERROR CRITICO DURANTE LA ACTUALIZACION:")
         print(f"    {e}")
         print("\\nEsta ventana se cerrara en 15 segundos...")
@@ -777,7 +791,7 @@ if __name__ == '__main__':
     flags = subprocess.CREATE_NEW_CONSOLE if os.name == "nt" else 0
     
     subprocess.Popen(
-        [str(python_exe), str(script_path), str(APP_DIR), str(zip_path), "DescarGato.exe"],
+        [str(python_exe), str(script_path), str(real_root_dir), str(zip_path), "DescarGato.exe"],
         creationflags=flags
     )
 def check_main_app_update(log=print, prog=lambda p: None):
