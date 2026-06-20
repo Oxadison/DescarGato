@@ -731,44 +731,51 @@ def run_update():
     zip_path = Path(sys.argv[2])
     exe_name = sys.argv[3]
 
-    # Esperar 3 segundos para asegurar que DescarGato.exe se cerró por completo
-    time.sleep(3) 
+    for i in range(5, 0, -1):
+        lbl_status.config(text=f"Esperando cierre del programa principal... {i}s")
+        root.update()
+        time.sleep(1)
 
     try:
-        # Extraer y sobreescribir todo
+        lbl_status.config(text="Extrayendo y reemplazando archivos...", fg="#0000CC")
+        root.update()
+        
         with zipfile.ZipFile(zip_path, 'r') as z:
             z.extractall(app_dir)
         
-        lbl_status.config(text="¡Actualización completada! Reiniciando...", fg="#008000")
+        lbl_status.config(text="¡Actualización completada con éxito! Reiniciando...", fg="#008000")
         root.update()
-        time.sleep(1.5)
+        time.sleep(2)
         
-        # Lanzar el nuevo DescarGato.exe
-        subprocess.Popen([str(app_dir / exe_name)], creationflags=subprocess.CREATE_NO_WINDOW)
+        target_exe = app_dir / exe_name
+        os.startfile(str(target_exe))
     except Exception as e:
-        lbl_status.config(text=f"Error: {e}", fg="#CC0000")
+        lbl_status.config(text=f"Error Crítico: {str(e)}", fg="#CC0000")
         root.update()
-        time.sleep(5)
+        time.sleep(10)
     finally:
         root.destroy()
         
 root = tk.Tk()
 root.title("DescarGato Updater")
-root.geometry("350x120")
+root.geometry("420x160") # Ventana más amplia
 root.configure(bg="#f0f0f0")
 root.resizable(False, False)
 
-# Centrar ventana
-x = (root.winfo_screenwidth() // 2) - (350 // 2)
-y = (root.winfo_screenheight() // 2) - (120 // 2)
+x = (root.winfo_screenwidth() // 2) - (420 // 2)
+y = (root.winfo_screenheight() // 2) - (160 // 2)
 root.geometry(f"+{x}+{y}")
 
-tk.Label(root, text="Instalando nueva versión de DescarGato...", font=("Helvetica", 10, "bold"), bg="#f0f0f0").pack(pady=(15, 5))
-lbl_status = tk.Label(root, text="Por favor espera, extrayendo archivos...", font=("Helvetica", 9), bg="#f0f0f0", fg="#0000CC")
-lbl_status.pack(pady=5)
-ttk.Progressbar(root, mode='indeterminate').pack(fill=tk.X, padx=30, pady=5)
+tk.Label(root, text="Instalando Nueva Versión de DescarGato", font=("Helvetica", 11, "bold"), bg="#f0f0f0", fg="#333333").pack(pady=(15, 5))
 
-root.after(100, run_update)
+lbl_status = tk.Label(root, text="Preparando entorno...", font=("Helvetica", 9), bg="#f0f0f0", fg="#0000CC", wraplength=380, justify="center")
+lbl_status.pack(pady=5, fill=tk.X, px=10)
+
+progress = ttk.Progressbar(root, mode='indeterminate')
+progress.pack(fill=tk.X, padx=40, pady=10)
+progress.start(10)
+
+root.after(200, run_update)
 root.mainloop()
 """
     script_path.write_text(script_code, encoding="utf-8")
