@@ -1,86 +1,50 @@
-📘 Información general 📘
+# 📘 Información general 📘
 
-DescarGato:
+## DescarGato:
 
-Este es mi primer proyecto que he creado especialmente para mi novia Suidelame ♥, es un software para el sistema operativo Windows 
-sencillo pero eficiente para descargar videos de múltiples plataformas como Youtube, Instagram, Facebook, Tiktok, etc; 
-funciona como una interfaz gráfica para yt-dlp usando como complementos ffmpeg, solver, deno, curl-cffi y arias2c.
+Este es mi primer proyecto, creado especialmente con amor para mi novia Suidelame ♥. Es un software sencillo pero eficiente para Windows que permite descargar videos de múltiples plataformas (YouTube, Instagram, Facebook, TikTok, etc.).
 
-Sólo deben instalarse python para poder abrir el archivo main.py, el solo se encarga de conseguir los complementos que necesita para funcionar,
-si lo quieren como un ejecutable .exe totalmente independiente en el sistema, ejecuten este comando:
+Funciona como una interfaz gráfica para yt-dlp, integrando automáticamente complementos como ffmpeg, solver, deno, curl-cffi y aria2c.
 
-pyinstaller --noconfirm --onedir --windowed --clean --name "DescarGato" --icon "icon.ico" --add-data "icon.ico;." main.py
+Sólo debes instalar Python para poder abrir el archivo `main.py`; el programa se encarga automáticamente de conseguir los complementos que necesita para funcionar.
 
 ------------------------------------------------------------------------
 
-Les dejo por si desean, la versión ya convertida en un ejecutable .exe para que
-puedan abrirlo directamente sin tener que instalar nada:
+### 📦 Versión Portable
 
-https://drive.google.com/file/d/1X0-u4GUS3p24lIp7QD-jok7QG-4lX5xE/view?usp=sharing
+Si prefieres no instalar nada, puedes descargar la versión portable (.exe) aquí:
 
-Nota: La primera vez que abran el programa se descargarán los complementos.
+[Descargar DescarGato.exe (Google Drive)](https://drive.google.com/file/d/1X0-u4GUS3p24lIp7QD-jok7QG-4lX5xE/view?usp=sharing)
 
-⚠️ Importante ⚠️
+*Nota: La primera vez que abras el programa se descargarán los complementos necesarios.*
 
-En caso de que uses el ejecutable .exe y al abrir te aparece la ventana de 
-"Windows protegió su PC", da click en "Más información" y "Ejecutar de todas formas"
+### ⚠️ Importante ⚠️
+
+En caso de que uses el ejecutable `.exe` y al abrir te aparezca la ventana de **"Windows protegió su PC"**, haz clic en **"Más información"** y luego en **"Ejecutar de todas formas"**.
 
 <img width="401" height="375" alt="01" src="https://github.com/user-attachments/assets/5ff53100-2615-41a9-855b-2eae707102d6" />   <img width="401" height="375" alt="03" src="https://github.com/user-attachments/assets/be88fc7c-cfab-4e9c-8e66-46c546111cae" />
 
 ------------------------------------------------------------------------
 
-🖥️ Instrucciones para su uso 🖥️
+## 🖥️ Instrucciones para su uso 🖥️
 
-La interfaz de DescarGato es muy intuitiva y está compuesta por los
-siguientes elementos:
+La interfaz de DescarGato es muy intuitiva y está compuesta por los siguientes elementos:
 
 <img width="874" height="862" alt="DesgarGato" src="https://github.com/user-attachments/assets/483a75ee-dd61-42b5-9c5d-5a4921152cd9" />
 
--   Barra de URL: aquí debes pegar el enlace del video que quieras
-    descargar (YouTube, TikTok, Instagram y más).
+| Elemento de la Interfaz | Función Principal |
+| :--- | :--- |
+| **Barra de URL** | Pegar el enlace del video que deseas descargar (YouTube, TikTok, Instagram y más). |
+| **Seleccionar Carpeta** | Elegir la ubicación exacta y personalizada en tu PC donde se guardarán los archivos (la ruta se muestra debajo). |
+| **Opciones de Descarga** | Seleccionar la calidad visual (por defecto "Mejor Calidad"), formato de solo audio, Multi-Lenguaje o el Modo Compatibilidad. |
+| **Botón Descargar** | Iniciar el proceso de descarga según la calidad y parámetros elegidos. |
+| **Limpiar / Cancelar** | Restablecer toda la interfaz, borrar el enlace ingresado, limpiar la consola o detener forzosamente un proceso activo. |
+| **Actualizar** | Verificar y descargar la última versión del software (si la hay) o renovar los complementos internos. |
+| **Consola de Detalles** | Visualizar el progreso, estado y posibles advertencias en tiempo real. |
+| **Estado General** | Ubicado al pie de la ventana, muestra el estado actual (esperando, descargando, completado o error). |
 
--   Botón "Seleccionar Carpeta de Descarga": te permite elegir una
-    ubicación personalizada donde se guardarán tus videos.
+### 📌 Notas sobre las Opciones de Descarga
 
--   Etiqueta de Carpeta Seleccionada: justo debajo se muestra la ruta de
-    la carpeta activa para que sepas dónde se guardarán los archivos.
-
--   Opciones de Descarga: permite elegir entre varias opciones
-    (Mejor Calidad, Multi-Lenguaje, Modo Compatibilidad, 1080p, 720p, 480p, 360p o Solo Audio).
-
-    Por defecto siempre está seleccionada la opción "Mejor Calidad".
-
-    Opción "Multi-Lenguaje": Esta función descarga el video en un 
-    contenedor .mkv que incluye el audio original y la mejor 
-    pista de audio en Español (si está disponible), además de los subtítulos incrustados. 
-    Esto permite cambiar de idioma y activar/desactivar subtítulos desde el 
-    reproductor de video.
-    
-    Nota sobre calidades específicas: Si eliges una opción como "1080p" y 
-    esta no está disponible en el video, el programa buscará automáticamente 
-    la siguiente calidad inferior más cercana (ej. 720p) para garantizar 
-    la descarga. Si no existe ninguna opción válida, te mostrará una lista 
-    de las calidades que sí están disponibles.
-
-    En caso de que el archivo descargado muestre incompatibilidad, 
-    elegir la opción "Modo Compatibilidad" esta opción buscará un formato
-    compatible, y en caso de que no lo haya, iniciará un proceso de conversión
-    forzada, lo que puede tardar más tiempo y consumir recursos de la computadora,
-    se recomienda no usarla en videos largos con calidades altas, y en
-    computadoras de bajos recursos.
-
--   Botón "Descargar": inicia la descarga del video según la calidad
-    seleccionada.
-
--   Botón "Limpiar / Cancelar": restablece la interfaz, borra el enlace
-    ingresado, limpia la consola y cancela cualquier proceso activo.
-
--   Botón "Actualizar": verifica y descarga la última versión del software en caso de que la halla, 
-    caso contrario descarga las últimas versiones de sus complementos que son importantes para que el software
-	funcione correctamente.
-
--   Consola de Detalles: muestra en tiempo real lo que hace el programa
-    (estado de la descarga, progreso, errores si ocurren, etc.).
-
--   Estado General: al pie de la ventana justo abajo de la consola,
-    se muestra el estado actual (esperando, descargando, completado o error).
+* **Opción "Multi-Lenguaje":** Esta función descarga el video en un contenedor `.mkv` que incluye el audio original y la mejor pista de audio en Español (si está disponible), además de los subtítulos incrustados. Esto permite cambiar de idioma y activar/desactivar subtítulos directamente desde el reproductor de video.
+* **Calidades específicas:** Si eliges una opción como **"1080p"** y esta no está disponible en el video, el programa buscará automáticamente **la siguiente calidad inferior más cercana** (ej. 720p) para garantizar la descarga. Si no existe ninguna opción válida, te mostrará una lista de las calidades que sí están disponibles.
+* **Modo Compatibilidad:** En caso de que el archivo descargado muestre incompatibilidad, elige esta opción. Buscará un formato compatible, y en caso de que no lo haya, iniciará un **proceso de conversión forzada**.
