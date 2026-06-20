@@ -1,0 +1,11 @@
+# Carpetas de descargas y binarios
+bin/
+gatodownload/
+gatoupdate/
+__pycache__/
+*.pyc
+
+# Archivos de compilación pyinstaller
+dist/
+build/
+*.spec
