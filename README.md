@@ -2,12 +2,14 @@
 
 DescarGato:
 
-Este es mi primer proyecto, un software que he creado especialmente para mi novia Suidelame ♥ 
+Este es mi primer proyecto, un software para el sistema operativo Windows que he creado especialmente para mi novia Suidelame ♥ 
 sencillo pero eficiente para descargar videos de múltiples 
 plataformas como Youtube, Instagram, Facebook, Tiktok, etc.
 
+Este software funciona como una interfaz gráfica para yt-dlp usando como complementos ffmpeg, solver, deno, curl-cffi y arias2c.
+
 Sólo deben instalarse python para poder abrir el archivo main.py, el solo se encarga de conseguir los complementos que necesita para funcionar,
-si lo quieren como un ejecutable .exe totalmente independiente en el sistema ejecuten este comando: (requiere tener pyinstaller instalado)
+si lo quieren como un ejecutable .exe totalmente independiente en el sistema, ejecuten este comando:
 
 pyinstaller --noconfirm --onedir --windowed --clean --name "DescarGato" --icon "icon.ico" --add-data "icon.ico;." main.py
 
@@ -18,7 +20,7 @@ puedan abrirlo directamente sin tener que instalar nada:
 
 https://drive.google.com/file/d/1X0-u4GUS3p24lIp7QD-jok7QG-4lX5xE/view?usp=sharing
 
-Nota: La primera vez que abran el programa se descargarán los complementos que aproximadamente son 444Mb
+Nota: La primera vez que abran el programa se descargarán los complementos.
 
 ⚠️ Importante ⚠️
 
@@ -75,20 +77,12 @@ siguientes elementos:
 -   Botón "Limpiar / Cancelar": restablece la interfaz, borra el enlace
     ingresado, limpia la consola y cancela cualquier proceso activo.
 
--   Botón "Actualizar": verifica y descarga automáticamente las últimas
-    versiones de sus complementos que son importantes para que el software funcione,
-	para mantener el programa al día.
+-   Botón "Actualizar": verifica y descarga la última versión del software en caso de que la halla, 
+    caso contrario descarga las últimas versiones de sus complementos que son importantes para que el software
+	funcione correctamente.
 
 -   Consola de Detalles: muestra en tiempo real lo que hace el programa
     (estado de la descarga, progreso, errores si ocurren, etc.).
 
 -   Estado General: al pie de la ventana justo abajo de la consola,
     se muestra el estado actual (esperando, descargando, completado o error).
-
-------------------------------------------------------------------------
-
-© 2025 Oxadison. Todos los derechos reservados.
-
-Este software es propiedad intelectual de Oxadison. 
-Queda prohibida su distribución, modificación o uso comercial sin 
-autorización previa y por escrito del autor.
