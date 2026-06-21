@@ -836,7 +836,7 @@ def check_main_app_update(log=print, prog=lambda p: None):
                     break
                     
             if asset_url:
-                log("Descargando la nueva versión (Esto puede tardar dependiendo de tu internet)...")
+                log("Descargando la nueva versión del DescarGato...")
                 zip_data = _http_bytes(asset_url)
                 
                 zip_path = Path(tempfile.gettempdir()) / f"DescarGato_Update_v{tag}.zip"
