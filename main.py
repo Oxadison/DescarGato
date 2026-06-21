@@ -126,9 +126,11 @@ class DescarGatoApp:
         self.status_label = tk.Label(
             self.root,
             text="⭐ Realiza alguna acción para comenzar ⭐",
+            wraplength=550,
             bg="#f0f0f0",
             fg=COLOR_DEFAULT,
-            font=("Helvetica", 14, "bold")
+            font=("Helvetica", 14, "bold"),
+            justify="center"
         )
         self.status_label.pack(pady=5)
 
