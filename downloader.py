@@ -745,8 +745,16 @@ def center_console():
         
         user32.SetWindowPos(hwnd, 0, x, y, 0, 0, 0x0001 | 0x0004)
 
+def disable_close_button():
+    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if hwnd:
+        hmenu = ctypes.windll.user32.GetSystemMenu(hwnd, False)
+        if hmenu:
+            ctypes.windll.user32.DeleteMenu(hmenu, 0xF060, 0x00000000)
+
 def run_update():
     center_console()
+    disable_close_button()
 
     app_dir = sys.argv[1]
     zip_path = sys.argv[2]
@@ -758,11 +766,20 @@ def run_update():
     print("==================================================")
     print("           INSTALANDO NUEVA VERSION               ")
     print("==================================================")
-    print("\\n[!] Esperando a que el programa principal se cierre...")
+    print("\\n[!] ATENCION: Por seguridad, no apagues tu PC en este momento.")
+    print("[!] Esperando a que el programa principal se cierre...")
     
     time.sleep(4) 
 
     try:
+        print("[!] Verificando la integridad del paquete descargado...")
+        if not zipfile.is_zipfile(zip_path):
+            raise Exception("El paquete no es un ZIP valido (descarga incompleta).")
+            
+        with zipfile.ZipFile(zip_path, 'r') as z:
+            if z.testzip() is not None:
+                raise Exception("El paquete esta corrupto. Abortando para proteger el software.")
+
         internal_dir = os.path.join(app_dir, "_internal")
         if os.path.exists(internal_dir):
             print("[!] Eliminando carpeta '_internal' antigua...")
@@ -842,6 +859,13 @@ def check_main_app_update(log=print, prog=lambda p: None):
                 zip_path = Path(tempfile.gettempdir()) / f"DescarGato_Update_v{tag}.zip"
                 with open(zip_path, "wb") as f:
                     f.write(zip_data)
+                
+                log("Verificando integridad de la descarga...")
+                if not zipfile.is_zipfile(zip_path):
+                    log("Error: La descarga está corrupta o incompleta. Se canceló la actualización.")
+                    if zip_path.exists():
+                        zip_path.unlink()
+                    return False
                 
                 prog(90)
                 _launch_gui_updater(zip_path, log)
