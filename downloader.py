@@ -14,7 +14,7 @@ import tempfile
 import ssl
 from pathlib import Path
 
-APP_VERSION = "1.0.2"
+APP_VERSION = "1.0.3"
 GITHUB_REPO = "Oxadison/DescarGato"
 
 APP_DIR = Path(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))))
@@ -726,8 +726,28 @@ def _launch_gui_updater(zip_path, log):
     script_path = temp_dir / "gatoupdater.py"
     script_code = """
 import sys, os, time, zipfile, shutil, ctypes
+from ctypes import wintypes
+
+def center_console():
+    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if hwnd:
+        user32 = ctypes.windll.user32
+        screen_width = user32.GetSystemMetrics(0)
+        screen_height = user32.GetSystemMetrics(1)
+        
+        rect = wintypes.RECT()
+        user32.GetWindowRect(hwnd, ctypes.byref(rect))
+        win_width = rect.right - rect.left
+        win_height = rect.bottom - rect.top
+        
+        x = (screen_width // 2) - (win_width // 2)
+        y = (screen_height // 2) - (win_height // 2)
+        
+        user32.SetWindowPos(hwnd, 0, x, y, 0, 0, 0x0001 | 0x0004)
 
 def run_update():
+    center_console()
+
     app_dir = sys.argv[1]
     zip_path = sys.argv[2]
     exe_name = sys.argv[3]
@@ -759,7 +779,7 @@ def run_update():
             try:
                 os.remove(old_exe)
             except Exception as e:
-                print(f"[-] Nota: No se pudo eliminar el .exe previo, se intentara sobrescribir. ({e})")
+                print(f"[-] Nota: No se pudo eliminar el .exe previo. ({e})")
 
         print("[!] Extrayendo y reemplazando con la nueva version...")
         with zipfile.ZipFile(zip_path, 'r') as z:
@@ -771,7 +791,6 @@ def run_update():
         except:
             pass
         
-        os.system("color 0A")
         print("\\n[+] ¡Actualizacion completada con exito!")
         print("[+] Iniciando DescarGato...")
         time.sleep(2.5)
@@ -780,7 +799,6 @@ def run_update():
         os.startfile(target_exe)
         
     except Exception as e:
-        os.system("color 0C")
         print(f"\\n[X] ERROR CRITICO DURANTE LA ACTUALIZACION:")
         print(f"    {e}")
         print("\\nEsta ventana se cerrara en 15 segundos...")
