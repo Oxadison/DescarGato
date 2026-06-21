@@ -45,7 +45,7 @@ class StdoutRedirector:
 class DescarGatoApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("DescarGato - Descargador de Videos")
+        self.root.title("DescarGato - Descargador de Videos - v1.0.5")
         try:
             self.root.iconbitmap(os.path.join(BASE_DIR, "icon.ico"))
         except Exception:
