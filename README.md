@@ -1,4 +1,4 @@
-# 📘 Información general 📘
+# Información general
 
 ## DescarGato:
 
