@@ -14,7 +14,7 @@ import tempfile
 import ssl
 from pathlib import Path
 
-APP_VERSION = "1.0.3"
+APP_VERSION = "1.0.4"
 GITHUB_REPO = "Oxadison/DescarGato"
 
 APP_DIR = Path(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))))
