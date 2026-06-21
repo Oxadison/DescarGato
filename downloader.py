@@ -14,7 +14,7 @@ import tempfile
 import ssl
 from pathlib import Path
 
-APP_VERSION = "1.0.1"
+APP_VERSION = "1.0.2"
 GITHUB_REPO = "Oxadison/DescarGato"
 
 APP_DIR = Path(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))))
@@ -725,7 +725,7 @@ def _launch_gui_updater(zip_path, log):
 
     script_path = temp_dir / "gatoupdater.py"
     script_code = """
-import sys, os, time, zipfile, shutil
+import sys, os, time, zipfile, shutil, ctypes
 
 def run_update():
     app_dir = sys.argv[1]
@@ -764,6 +764,12 @@ def run_update():
         print("[!] Extrayendo y reemplazando con la nueva version...")
         with zipfile.ZipFile(zip_path, 'r') as z:
             z.extractall(app_dir)
+            
+        print("[!] Refrescando cache de iconos de Windows...")
+        try:
+            ctypes.windll.shell32.SHChangeNotify(0x08000000, 0, None, None)
+        except:
+            pass
         
         os.system("color 0A")
         print("\\n[+] ¡Actualizacion completada con exito!")
