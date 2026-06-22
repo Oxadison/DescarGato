@@ -14,7 +14,8 @@ from downloader import (
     cancel_download,
     cancel_event,
     get_video_info_json,
-    check_main_app_update
+    check_main_app_update,
+    check_app_update_available
 )
 
 BASE_DIR = Path(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))))
@@ -45,7 +46,7 @@ class StdoutRedirector:
 class DescarGatoApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("DescarGato - Descargador de Videos - v1.0.5")
+        self.root.title("DescarGato - v1.0.6")
         try:
             self.root.iconbitmap(os.path.join(BASE_DIR, "icon.ico"))
         except Exception:
@@ -106,7 +107,7 @@ class DescarGatoApp:
         btn_frame = tk.Frame(self.root, bg="#f0f0f0")
         self.btn_download = tk.Button(btn_frame, text="Descargar", command=self.start_download)
         self.btn_clean = tk.Button(btn_frame, text="Limpiar / Cancelar", command=self.clear_interface)
-        self.btn_update = tk.Button(btn_frame, text="Actualizar", command=self.start_update)
+        self.btn_update = tk.Button(btn_frame, text="Actualizador", bg="#FF9F43", fg="#402010", font=("Helvetica", 9, "bold"), command=self.start_update)
         self.btn_download.pack(side="left", padx=5)
         self.btn_clean.pack(side="left", padx=5)
         self.btn_update.pack(side="left", padx=5)
@@ -561,7 +562,16 @@ class DescarGatoApp:
             _ensure_dependencies(log=log, prog=prog)
 
             self.write_console("Entorno verificado correctamente.")
-            self.root.after(0, lambda: self.status_label.config(text="⭐ Realiza alguna acción para comenzar ⭐", fg=COLOR_DEFAULT))
+            
+            has_update, new_version = check_app_update_available(log=log)
+            
+            if has_update:
+                msg = f"¡Versión v{new_version} disponible! Presiona el botón 'Actualizador' 🚀"
+                self.write_console(msg)
+                self.root.after(0, lambda: self.status_label.config(text=msg, fg="#D2691E"))
+            else:
+                self.root.after(0, lambda: self.status_label.config(text="⭐ Realiza alguna acción para comenzar ⭐", fg=COLOR_DEFAULT))
+                
         except Exception as e:
             self.write_console(f"[AutoRepair] {e}")
             self.root.after(0, lambda: self.status_label.config(text="Error durante la reparación ❌", fg=COLOR_ERROR))
