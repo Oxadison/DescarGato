@@ -14,7 +14,7 @@ import tempfile
 import ssl
 from pathlib import Path
 
-APP_VERSION = "1.0.5"
+APP_VERSION = "1.0.6"
 GITHUB_REPO = "Oxadison/DescarGato"
 
 APP_DIR = Path(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))))
@@ -876,6 +876,18 @@ def check_main_app_update(log=print, prog=lambda p: None):
         log(f"No se pudo verificar actualizaciones del núcleo: {e}")
     return False
 
+def check_app_update_available(log=print):
+    try:
+        api_url = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
+        rel = _http_json(api_url)
+        tag = rel.get("tag_name", "").strip("v")
+        
+        if tag and tag != APP_VERSION:
+            return True, tag
+    except Exception:
+        pass
+    return False, None
+
 __all__ = [
     "check_and_update_all",
     "_ensure_dependencies",
@@ -883,5 +895,6 @@ __all__ = [
     "cancel_download",
     "cancel_event",
     "get_video_info_json",
-    "check_main_app_update"
+    "check_main_app_update",
+    "check_app_update_available"
 ]
