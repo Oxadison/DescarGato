@@ -842,7 +842,14 @@ def check_main_app_update(log=print, prog=lambda p: None):
         rel = _http_json(api_url)
         tag = rel.get("tag_name", "").strip("v")
         
+        is_newer = False
         if tag and tag != APP_VERSION:
+            try:
+                is_newer = tuple(map(int, tag.split("."))) > tuple(map(int, APP_VERSION.split(".")))
+            except ValueError:
+                is_newer = tag > APP_VERSION
+                
+        if is_newer:
             log(f"¡Nueva versión del programa encontrada! (v{tag})")
             prog(10)
             
@@ -882,7 +889,14 @@ def check_app_update_available(log=print):
         rel = _http_json(api_url)
         tag = rel.get("tag_name", "").strip("v")
         
+        is_newer = False
         if tag and tag != APP_VERSION:
+            try:
+                is_newer = tuple(map(int, tag.split("."))) > tuple(map(int, APP_VERSION.split(".")))
+            except ValueError:
+                is_newer = tag > APP_VERSION
+                
+        if is_newer:
             return True, tag
     except Exception:
         pass
