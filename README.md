@@ -2,10 +2,10 @@
 
 ## DescarGato:
 
-Este es mi primer proyecto, creado especialmente con amor para mi novia Suidelame ♥.
+Este es mi primer proyecto, creado especialmente con amor para mi novia **Suidelame ♥**
 
-Este es un software sencillo pero eficiente para Windows que permite descargar videos de múltiples plataformas (YouTube, Instagram, Facebook, TikTok, etc.).
-Funciona como una interfaz gráfica para yt-dlp, integrando automáticamente complementos como ffmpeg, solver, deno, curl-cffi y aria2c.
+**DescarGato** es un software sencillo pero eficiente para **Windows** que permite descargar videos de múltiples plataformas como YouTube, Instagram, Facebook, TikTok, etc.
+Funciona principalmente como una interfaz gráfica para **yt-dlp**, integrando varios complementos adicionales.
 
 Sólo debes instalar Python para poder abrir el archivo `main.py`; el programa se encarga automáticamente de conseguir los complementos que necesita para funcionar.
 
