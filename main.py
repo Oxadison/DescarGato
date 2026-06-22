@@ -566,7 +566,7 @@ class DescarGatoApp:
             has_update, new_version = check_app_update_available(log=log)
             
             if has_update:
-                msg = f"¡Versión v{new_version} disponible! Presiona el botón 'Actualizador' 🚀"
+                msg = f"¡Versión v{new_version} disponible! ¡Actualiza tu software YA!"
                 self.write_console(msg)
                 self.root.after(0, lambda: self.status_label.config(text=msg, fg="#D2691E"))
             else:
