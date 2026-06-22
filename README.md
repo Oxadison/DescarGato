@@ -18,7 +18,7 @@ Sólo debes instalar Python para poder abrir el archivo `main.py`; el programa s
 
 En caso de que uses el ejecutable `.exe` y al abrir te aparezca la ventana de **"Windows protegió su PC"**, haz clic en **"Más información"** y luego en **"Ejecutar de todas formas"**.
 
-<img width="401" height="375" alt="01" src="https://github.com/user-attachments/assets/5ff53100-2615-41a9-855b-2eae707102d6" />   <img width="401" height="375" alt="03" src="https://github.com/user-attachments/assets/be88fc7c-cfab-4e9c-8e66-46c546111cae" />
+<img width="1068" height="500" alt="1_2" src="https://github.com/user-attachments/assets/87f7d672-f3b3-42c1-969d-8fc3becaf1ea" />
 
 ------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ En caso de que uses el ejecutable `.exe` y al abrir te aparezca la ventana de **
 
 La interfaz de DescarGato es muy intuitiva y está compuesta por los siguientes elementos:
 
-<img width="874" height="862" alt="DesgarGato" src="https://github.com/user-attachments/assets/483a75ee-dd61-42b5-9c5d-5a4921152cd9" />
+<img width="874" height="862" alt="DescarGato_c2" src="https://github.com/user-attachments/assets/84b3fe13-445a-4a1f-b3e7-f1dc747ac0d7" />
 
 | Elemento de la Interfaz | Función Principal |
 | :--- | :--- |
@@ -35,7 +35,7 @@ La interfaz de DescarGato es muy intuitiva y está compuesta por los siguientes 
 | **Opciones de Descarga** | Seleccionar la calidad visual (por defecto "Mejor Calidad"), formato de solo audio, Multi-Lenguaje o el Modo Compatibilidad. |
 | **Botón Descargar** | Iniciar el proceso de descarga según la calidad y parámetros elegidos. |
 | **Limpiar / Cancelar** | Restablecer toda la interfaz, borrar el enlace ingresado, limpiar la consola o detener forzosamente un proceso activo. |
-| **Actualizar** | Verificar y descargar la última versión del software (si la hay) o renovar los complementos internos. |
+| **Actualizador** | Verificar y descargar la última versión del software (si la hay) o renovar los complementos internos. |
 | **Consola de Detalles** | Visualizar el progreso, estado y posibles advertencias en tiempo real. |
 | **Estado General** | Ubicado al pie de la ventana, muestra el estado actual (esperando, descargando, completado o error). |
 
@@ -44,3 +44,9 @@ La interfaz de DescarGato es muy intuitiva y está compuesta por los siguientes 
 * **Opción "Multi-Lenguaje":** Esta función descarga el video en un contenedor `.mkv` que incluye el audio original y la mejor pista de audio en Español (si está disponible), además de los subtítulos incrustados. Esto permite cambiar de idioma y activar/desactivar subtítulos directamente desde el reproductor de video.
 * **Calidades específicas:** Si eliges una opción como **"1080p"** y esta no está disponible en el video, el programa buscará automáticamente **la siguiente calidad inferior más cercana** (ej. 720p) para garantizar la descarga. Si no existe ninguna opción válida, te mostrará una lista de las calidades que sí están disponibles.
 * **Modo Compatibilidad:** En caso de que el archivo descargado muestre incompatibilidad, elige esta opción. Buscará un formato compatible, y en caso de que no lo haya, iniciará un **proceso de conversión forzada**.
+
+### 🛑 ¡Advertencia Crítica sobre las Actualizaciones! 🛑
+
+Al momento de actualizar el software, se abrirá **la consola de actualización**.
+
+**Bajo ningún concepto debes cerrarla**. Hacerlo corromperá los archivos internos y dejará el programa completamente inutilizado. Aunque he bloqueado el botón de cerrar (X) por seguridad, si el proceso llegara a interrumpirse por cualquier otro motivo (como un cierre forzado del sistema), será necesario **descargar el software nuevamente** desde este repositorio. 🐈‍⬛⚙️
