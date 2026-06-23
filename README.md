@@ -56,12 +56,12 @@ Al momento de actualizar el software, se abrirá **la consola de actualización*
 
 ------------------------------------------------------------------------
 
-## ⚖️ Políticas de Uso y Descargo de Responsabilidad ⚖️
+## ⚖️ Políticas de Uso y Descargo de Responsabilidad
 
 **DescarGato** ha sido desarrollado con fines estrictamente educativos y para facilitar el acceso a contenido de libre distribución o para uso personal y privado. 
 
 Al descargar y utilizar este software, el usuario acepta las siguientes políticas:
-1. **Responsabilidad del Usuario:** El desarrollador (Oxadison) no fomenta, apoya ni se hace responsable de la descarga, distribución o piratería de material protegido por derechos de autor. Toda la responsabilidad legal recae única y exclusivamente en el usuario final.
+1. **Responsabilidad del Usuario:** El desarrollador (Oxadison) no fomenta, apoya ni se hace responsable de la descarga, distribución o piratería de material protegido por derechos de autor, así como tampoco de la obtención, almacenamiento o distribución de cualquier tipo de material ilegal, ilícito o prohibido por las leyes vigentes. Toda la responsabilidad legal, penal y civil recae única y exclusivamente en el usuario final.
 2. **Respeto a las Plataformas:** El usuario debe asegurarse de tener los derechos, permisos o consentimientos legales necesarios antes de descargar medios desde cualquier plataforma, respetando siempre sus respectivos Términos de Servicio (ToS).
 3. **Uso del Software:** Este programa se proporciona "tal cual", sin garantías de ningún tipo. El desarrollador no se hace responsable de daños, pérdida de datos o bloqueos de IP derivados del uso de esta herramienta.
 
