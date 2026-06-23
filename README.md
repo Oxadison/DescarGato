@@ -56,7 +56,7 @@ Al momento de actualizar el software, se abrirá **la consola de actualización*
 
 ------------------------------------------------------------------------
 
-## ⚖️ Políticas de Uso y Descargo de Responsabilidad
+## ⚖️ Políticas de Uso y Descargo de Responsabilidad ⚖️
 
 **DescarGato** ha sido desarrollado con fines estrictamente educativos y para facilitar el acceso a contenido de libre distribución o para uso personal y privado. 
 
@@ -67,7 +67,7 @@ Al descargar y utilizar este software, el usuario acepta las siguientes polític
 
 ------------------------------------------------------------------------
 
-## 🤝 Créditos y Dependencias de Terceros
+## 🤝 Créditos y Dependencias de Terceros 🤝
 
 Este proyecto funciona como una interfaz gráfica y orquestador. El trabajo pesado de descarga y procesamiento es realizado gracias a los siguientes proyectos de código abierto, los cuales son descargados dinámicamente por la aplicación:
 
