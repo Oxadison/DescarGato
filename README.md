@@ -53,3 +53,31 @@ Al momento de actualizar el software, se abrirá **la consola de actualización*
 <img width="1099" height="637" alt="Console" src="https://github.com/user-attachments/assets/8deb439e-45ed-4ff0-bc59-96b793aebcbb" />
 
 **Bajo ningún concepto debes cerrarla**. Hacerlo dejará el programa completamente inutilizado. Aunque he bloqueado el botón de cerrar (X) por seguridad, si el proceso llegara a interrumpirse por cualquier otro motivo (como un cierre forzado del sistema), será necesario **descargar el software nuevamente** desde este repositorio.
+
+------------------------------------------------------------------------
+
+## ⚖️ Políticas de Uso y Descargo de Responsabilidad
+
+**DescarGato** ha sido desarrollado con fines estrictamente educativos y para facilitar el acceso a contenido de libre distribución o para uso personal y privado. 
+
+Al descargar y utilizar este software, el usuario acepta las siguientes políticas:
+1. **Responsabilidad del Usuario:** El desarrollador (Oxadison) no fomenta, apoya ni se hace responsable de la descarga, distribución o piratería de material protegido por derechos de autor. Toda la responsabilidad legal recae única y exclusivamente en el usuario final.
+2. **Respeto a las Plataformas:** El usuario debe asegurarse de tener los derechos, permisos o consentimientos legales necesarios antes de descargar medios desde cualquier plataforma, respetando siempre sus respectivos Términos de Servicio (ToS).
+3. **Uso del Software:** Este programa se proporciona "tal cual", sin garantías de ningún tipo. El desarrollador no se hace responsable de daños, pérdida de datos o bloqueos de IP derivados del uso de esta herramienta.
+
+------------------------------------------------------------------------
+
+## 🤝 Créditos y Dependencias de Terceros
+
+Este proyecto funciona como una interfaz gráfica y orquestador. El trabajo pesado de descarga y procesamiento es realizado gracias a los siguientes proyectos de código abierto, los cuales son descargados dinámicamente por la aplicación:
+
+* **[yt-dlp](https://github.com/yt-dlp/yt-dlp):** El motor principal utilizado para la extracción y descarga de medios.
+* **[FFmpeg](https://ffmpeg.org/) (vía [gyan.dev](https://www.gyan.dev/ffmpeg/builds/)):** Fundamental para la conversión de formatos y la fusión de pistas de audio y video en calidades altas.
+* **[Deno](https://deno.com/):** Entorno de ejecución de JavaScript utilizado en segundo plano para procesar scripts de resolución de desafíos de red (`solver.js`).
+* **[curl_cffi](https://github.com/lexiforest/curl_cffi):** Librería de Python utilizada para suplantar huellas TLS y asegurar conexiones estables.
+* **Python Embebido:** El núcleo portátil que permite que DescarGato funcione en cualquier sistema Windows sin instalaciones previas.
+* **Tkinter:** El framework nativo de Python utilizado para construir esta interfaz gráfica.
+
+------------------------------------------------------------------------
+
+**© 2025 Oxadison. Todos los derechos reservados.**
