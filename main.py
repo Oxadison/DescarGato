@@ -46,7 +46,7 @@ class StdoutRedirector:
 class DescarGatoApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("DescarGato - v1.0.6")
+        self.root.title("DescarGato - v1.0.7")
         try:
             self.root.iconbitmap(os.path.join(BASE_DIR, "icon.ico"))
         except Exception:
@@ -80,7 +80,7 @@ class DescarGatoApp:
         tk.Label(self.root, text="DescarGato - Descargador de Videos",
                  font=("Helvetica", 18, "bold"), bg="#f0f0f0").pack(pady=10)
         tk.Label(self.root, text="♥ De Oxadison para Suidelame ♥",
-                 font=("Helvetica", 12, "bold"), bg="#f0f0f0").pack(pady=10)
+                 font=("Helvetica", 12), bg="#f0f0f0").pack(pady=10)
 
         tk.Label(self.root, text="URL del Video:", bg="#f0f0f0").pack()
         self.url_entry = tk.Entry(self.root, width=80)
@@ -91,7 +91,7 @@ class DescarGatoApp:
         url_menu.add_command(label="Pegar", command=lambda: self.url_entry.event_generate("<<Paste>>"))
         self.url_entry.bind("<Button-3>", lambda e: self._popup_menu(e, url_menu, self.url_entry))
 
-        tk.Button(self.root, text="Seleccionar Carpeta de Descarga",
+        tk.Button(self.root, text="Seleccionar Carpeta de Descarga", font=("Helvetica", 9),
                   command=self.select_directory).pack()
         self.dir_label = tk.Label(self.root, textvariable=self.download_dir, fg="blue", bg="#f0f0f0")
         self.dir_label.pack(pady=5)
@@ -105,9 +105,9 @@ class DescarGatoApp:
         self.quality_box.pack(pady=5)
 
         btn_frame = tk.Frame(self.root, bg="#f0f0f0")
-        self.btn_download = tk.Button(btn_frame, text="Descargar", command=self.start_download)
-        self.btn_clean = tk.Button(btn_frame, text="Limpiar / Cancelar", command=self.clear_interface)
-        self.btn_update = tk.Button(btn_frame, text="Actualizador", bg="#FF9F43", fg="#402010", font=("Helvetica", 9, "bold"), command=self.start_update)
+        self.btn_download = tk.Button(btn_frame, text="Descargar", font=("Helvetica", 9), command=self.start_download)
+        self.btn_clean = tk.Button(btn_frame, text="Limpiar / Cancelar", font=("Helvetica", 9), command=self.clear_interface)
+        self.btn_update = tk.Button(btn_frame, text="Actualizador", bg="#FF9F43", fg="#402010", font=("Helvetica", 9), command=self.start_update)
         self.btn_download.pack(side="left", padx=5)
         self.btn_clean.pack(side="left", padx=5)
         self.btn_update.pack(side="left", padx=5)
@@ -318,7 +318,7 @@ class DescarGatoApp:
 
         self.is_downloading = True
         cancel_event.clear()
-        self.status_label.config(text="Descargando… ⏳", fg=COLOR_INFO)
+        self.status_label.config(text="Descargando…", fg=COLOR_INFO)
         self.set_buttons_state()
 
         threading.Thread(target=self._download_thread, args=(url, mp3_mode), daemon=True).start()
@@ -361,7 +361,7 @@ class DescarGatoApp:
                 
                 if final_height:
                     if final_height < target_height:
-                        self.write_console(f"⚠️ {target_height}p no disponible. Bajando a {final_height}p (la más cercana disponible).")
+                        self.write_console(f"{target_height}p no disponible. Bajando a {final_height}p (la más cercana disponible).")
                     else:
                         self.write_console(f"Calidad {final_height}p confirmada.")
 
@@ -369,7 +369,7 @@ class DescarGatoApp:
                     merge_target = None
                     use_fallback_logic = False
                 else:
-                    self.write_console(f"⚠️ Calidad no disponible: {selected_quality} (ni inferiores).")
+                    self.write_console(f"Calidad no disponible: {selected_quality} (ni inferiores).")
                     
                     if sorted_heights:
                         msg_avail = ", ".join([f"{h}p" for h in sorted_heights])
@@ -377,7 +377,7 @@ class DescarGatoApp:
                     else:
                         self.write_console("No se pudo obtener la lista de calidades.")
                         
-                    self.root.after(0, lambda: self.status_label.config(text="Calidad no disponible ❌", fg=COLOR_WARN))
+                    self.root.after(0, lambda: self.status_label.config(text="Calidad no disponible", fg=COLOR_WARN))
                     return
 
             elif selected_quality == "Mejor Calidad":
@@ -409,7 +409,7 @@ class DescarGatoApp:
                 use_fallback_logic = False
 
             def progress_hook(percent):
-                self.root.after(0, lambda: self.status_label.config(text="Descargando… ⏳", fg=COLOR_INFO))
+                self.root.after(0, lambda: self.status_label.config(text="Descargando…", fg=COLOR_INFO))
 
             if not use_fallback_logic:
                 is_multi = (selected_quality == "Multi-Lenguaje")
@@ -442,9 +442,9 @@ class DescarGatoApp:
                 except Exception as e:
                     error_str = str(e)
                     if "Requested format is not available" in error_str or "exit code" in error_str or "Error código 1" in error_str:
-                        msg = "⚠️ Formato nativo no encontrado. Activando Conversión Forzada (Esto puede tardar)..."
+                        msg = "Formato nativo no encontrado. Activando Conversión Forzada (Esto puede tardar)..."
                         self.write_console(msg)
-                        self.root.after(0, lambda: self.status_label.config(text="Convirtiendo… ⏳", fg=COLOR_WARN))
+                        self.root.after(0, lambda: self.status_label.config(text="Convirtiendo…", fg=COLOR_WARN))
                         
                         download_video(
                             url,
@@ -458,13 +458,13 @@ class DescarGatoApp:
                         raise e 
 
             if not cancel_event.is_set():
-                self.root.after(0, lambda: self.status_label.config(text="Completado ✅", fg=COLOR_SUCCESS))
+                self.root.after(0, lambda: self.status_label.config(text="Completado", fg=COLOR_SUCCESS))
         
         except KeyboardInterrupt:
-            self.root.after(0, lambda: self.status_label.config(text="Cancelado ⏹️", fg=COLOR_WARN))
+            self.root.after(0, lambda: self.status_label.config(text="Cancelado", fg=COLOR_WARN))
             self.write_console("Proceso cancelado por el usuario.")
         except Exception as e:
-            self.root.after(0, lambda: self.status_label.config(text="Error ❌", fg=COLOR_ERROR))
+            self.root.after(0, lambda: self.status_label.config(text="Error", fg=COLOR_ERROR))
             err = str(e)
             print(f"[Error] {err}")
             if "Requested format is not available" in err:
@@ -480,7 +480,7 @@ class DescarGatoApp:
 
         self.is_updating = True
         cancel_event.clear()
-        self.status_label.config(text="Actualizando… 🔄", fg=COLOR_INFO)
+        self.status_label.config(text="Actualizando…", fg=COLOR_INFO)
         self.set_buttons_state()
 
         threading.Thread(target=self._run_update, daemon=True).start()
@@ -490,37 +490,64 @@ class DescarGatoApp:
             def log(msg):
                 self.write_console(msg)
                 if len(msg) < 80:
-                    self.root.after(0, lambda: self.status_label.config(text=f"{msg} 🔄", fg=COLOR_INFO))
+                    self.root.after(0, lambda: self.status_label.config(text=f"{msg}", fg=COLOR_INFO))
 
             def prog(pct):
                 pass 
 
-            self.write_console("Actualizando componentes…")
-            self.root.after(0, lambda: self.status_label.config(text="Buscando actualizaciones… 🔄", fg=COLOR_INFO))
+            self.write_console("Verificando el estado de las actualizaciones en la nube…")
+            self.root.after(0, lambda: self.status_label.config(text="Buscando actualizaciones…", fg=COLOR_INFO))
 
-            has_core_update = check_main_app_update(log, prog)
-            
-            if has_core_update:
-                os._exit(0)
-                return
+            has_update, new_version = check_app_update_available(log=lambda msg: None)
 
-            updated = check_and_update_all(log, prog)
+            if has_update:
+                actualizar_app = messagebox.askyesno(
+                    "¡Nueva Versión Disponible!",
+                    f"¡Se ha encontrado la versión v{new_version} de DescarGato!\n\n"
+                    "¿Deseas descargar e instalar la actualización ahora?\n\n"
+                    "Nota: Esta acción actualizará el núcleo del programa y renovará "
+                    "automáticamente todos los complementos internos."
+                )
+                
+                if actualizar_app:
+                    has_core_update = check_main_app_update(log, prog)
+                    if has_core_update:
+                        os._exit(0)
+                        return
+                else:
+                    self.write_console("Actualización principal cancelada por el usuario.")
+                    self.root.after(0, lambda: self.status_label.config(text="Cancelado", fg=COLOR_DEFAULT))
+                    return
+            else:
+                renovar_complementos = messagebox.askyesno(
+                    "Mantenimiento de Complementos",
+                    "DescarGato ya se encuentra en su última versión.\n\n"
+                    "Sin embargo, puedes realizar un mantenimiento preventivo de los motores de descarga.\n\n"
+                    "¿Deseas forzar la renovación de todos los complementos internos?"
+                )
+
+                if not renovar_complementos:
+                    self.write_console("Mantenimiento de complementos cancelado por el usuario.")
+                    self.root.after(0, lambda: self.status_label.config(text="Cancelado", fg=COLOR_DEFAULT))
+                    return
+
+                updated = check_and_update_all(log, prog)
 
             if cancel_event.is_set():
-                self.root.after(0, lambda: self.status_label.config(text="Cancelado ⏹️", fg=COLOR_WARN))
+                self.root.after(0, lambda: self.status_label.config(text="Cancelado", fg=COLOR_WARN))
                 self.write_console("Proceso cancelado por el usuario.")
             else:
                 if updated:
-                    self.root.after(0, lambda: self.status_label.config(text="Actualización completada ✅", fg=COLOR_SUCCESS))
+                    self.root.after(0, lambda: self.status_label.config(text="Actualización completada", fg=COLOR_SUCCESS))
                     self.write_console("Actualización completada satisfactoriamente.")
                 else:
-                    self.root.after(0, lambda: self.status_label.config(text="Sin novedades 👍", fg=COLOR_DEFAULT))
+                    self.root.after(0, lambda: self.status_label.config(text="Sin novedades", fg=COLOR_DEFAULT))
                     self.write_console("No se han encontrado nuevas actualizaciones.")
         except KeyboardInterrupt:
-            self.root.after(0, lambda: self.status_label.config(text="Cancelado ⏹️", fg=COLOR_WARN))
+            self.root.after(0, lambda: self.status_label.config(text="Cancelado", fg=COLOR_WARN))
             self.write_console("Proceso cancelado por el usuario.")
         except Exception as e:
-            self.root.after(0, lambda: self.status_label.config(text="Error durante la actualización ❌", fg=COLOR_ERROR))
+            self.root.after(0, lambda: self.status_label.config(text="Error durante la actualización", fg=COLOR_ERROR))
             print(f"[Update][Error] {e}")
         finally:
             self.is_updating = False
@@ -549,12 +576,12 @@ class DescarGatoApp:
     def _auto_repair_boot(self):
         try:
             self.write_console("Verificando entorno…")
-            self.root.after(0, lambda: self.status_label.config(text="Verificando entorno… 🛠️", fg=COLOR_INFO))
+            self.root.after(0, lambda: self.status_label.config(text="Verificando entorno…", fg=COLOR_INFO))
 
             def log(msg):
                 self.write_console(msg)
                 if len(msg) < 80:
-                    self.root.after(0, lambda: self.status_label.config(text=f"{msg} 🛠️", fg=COLOR_INFO))
+                    self.root.after(0, lambda: self.status_label.config(text=f"{msg}", fg=COLOR_INFO))
 
             def prog(pct):
                 pass
@@ -574,7 +601,7 @@ class DescarGatoApp:
                 
         except Exception as e:
             self.write_console(f"[AutoRepair] {e}")
-            self.root.after(0, lambda: self.status_label.config(text="Error durante la reparación ❌", fg=COLOR_ERROR))
+            self.root.after(0, lambda: self.status_label.config(text="Error durante la reparación", fg=COLOR_ERROR))
         finally:
             self.is_repairing = False
             self.root.after(0, self.set_buttons_state)

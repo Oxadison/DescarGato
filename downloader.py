@@ -14,7 +14,7 @@ import tempfile
 import ssl
 from pathlib import Path
 
-APP_VERSION = "1.0.6"
+APP_VERSION = "1.0.7"
 GITHUB_REPO = "Oxadison/DescarGato"
 
 APP_DIR = Path(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))))
@@ -430,13 +430,9 @@ def check_and_update_all(log=print, prog=lambda p: None):
     prog(0)
     try:
         if BIN_DIR.exists():
-            log("Limpiando instalación anterior...")
-            for item in [PY_EMBED_DIR, SITE_PACKAGES, FFMPEG_EXE, FFPROBE_EXE, ARIA2C_EXE, DENO_EXE, SOLVER_JS]:
-                try:
-                    if Path(item).is_file(): Path(item).unlink(missing_ok=True)
-                    elif Path(item).is_dir(): shutil.rmtree(item, ignore_errors=True)
-                except Exception as e: log(f"[CleanupOld] No se pudo eliminar {item}: {e}")
-            shutil.rmtree(SITE_PACKAGES, ignore_errors=True)
+            log("Eliminando por completo la carpeta 'bin' antigua...")
+            shutil.rmtree(BIN_DIR, ignore_errors=True)
+            
         _ensure_dir(BIN_DIR)
         log("Componentes antiguos eliminados correctamente.")
         prog(5)
@@ -728,97 +724,112 @@ def _launch_gui_updater(zip_path, log):
 import sys, os, time, zipfile, shutil, ctypes
 from ctypes import wintypes
 
-def center_console():
+CONSOLE_WIDTH = 90
+
+def cprint(text):
+    \"\"\"Centra el texto automáticamente basado en el ancho de la consola\"\"\"
+    for line in str(text).split('\\n'):
+        print(line.center(CONSOLE_WIDTH))
+
+def setup_console():
+    os.system(f"mode con cols={CONSOLE_WIDTH} lines=25")
+    
     hwnd = ctypes.windll.kernel32.GetConsoleWindow()
     if hwnd:
         user32 = ctypes.windll.user32
+        
+        GWL_STYLE = -16
+        style = user32.GetWindowLongW(hwnd, GWL_STYLE)
+        user32.SetWindowLongW(hwnd, GWL_STYLE, style & ~0x00040000 & ~0x00010000)
+        
+        hmenu = user32.GetSystemMenu(hwnd, False)
+        if hmenu:
+            user32.DeleteMenu(hmenu, 0xF060, 0x00000000)
+            
         screen_width = user32.GetSystemMetrics(0)
         screen_height = user32.GetSystemMetrics(1)
-        
         rect = wintypes.RECT()
         user32.GetWindowRect(hwnd, ctypes.byref(rect))
         win_width = rect.right - rect.left
         win_height = rect.bottom - rect.top
-        
         x = (screen_width // 2) - (win_width // 2)
         y = (screen_height // 2) - (win_height // 2)
         
-        user32.SetWindowPos(hwnd, 0, x, y, 0, 0, 0x0001 | 0x0004)
-
-def disable_close_button():
-    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
-    if hwnd:
-        hmenu = ctypes.windll.user32.GetSystemMenu(hwnd, False)
-        if hmenu:
-            ctypes.windll.user32.DeleteMenu(hmenu, 0xF060, 0x00000000)
+        user32.SetWindowPos(hwnd, 0, x, y, 0, 0, 0x0001 | 0x0004 | 0x0020)
 
 def run_update():
-    center_console()
-    disable_close_button()
+    os.system("title DescarGato Updater")
+    os.system("color 0B")
+    
+    setup_console()
 
     app_dir = sys.argv[1]
     zip_path = sys.argv[2]
     exe_name = sys.argv[3]
 
-    os.system("title DescarGato Updater")
-    os.system("color 0B")
-    
-    print("==================================================")
-    print("           INSTALANDO NUEVA VERSION               ")
-    print("==================================================")
-    print("\\n[!] ATENCION: Por seguridad, no apagues tu PC en este momento.")
-    print("[!] Esperando a que el programa principal se cierre...")
+    print("\\n\\n\\n")
+    cprint("==================================================")
+    cprint("INSTALANDO NUEVA VERSION DE DESCARGATO")
+    cprint("==================================================")
+    print("\\n")
+    cprint("ATENCION: Por seguridad, no apagues tu PC.")
+    cprint("Esperando a que el programa principal se cierre...")
     
     time.sleep(4) 
 
     try:
-        print("[!] Verificando la integridad del paquete descargado...")
+        cprint("Verificando la integridad del paquete descargado...")
         if not zipfile.is_zipfile(zip_path):
             raise Exception("El paquete no es un ZIP valido (descarga incompleta).")
             
         with zipfile.ZipFile(zip_path, 'r') as z:
             if z.testzip() is not None:
-                raise Exception("El paquete esta corrupto. Abortando para proteger el software.")
+                raise Exception("El paquete esta corrupto. Abortando.")
 
         internal_dir = os.path.join(app_dir, "_internal")
         if os.path.exists(internal_dir):
-            print("[!] Eliminando carpeta '_internal' antigua...")
+            cprint("Eliminando motor '_internal' antiguo...")
             shutil.rmtree(internal_dir, ignore_errors=True)
             
         bin_dir = os.path.join(app_dir, "bin")
         if os.path.exists(bin_dir):
-            print("[!] Eliminando carpeta 'bin' antigua...")
+            cprint("Eliminando complementos 'bin' antiguos...")
             shutil.rmtree(bin_dir, ignore_errors=True)
 
         old_exe = os.path.join(app_dir, exe_name)
         if os.path.exists(old_exe):
-            print(f"[!] Eliminando {exe_name} antiguo...")
+            cprint(f"Reemplazando nucleo ({exe_name})...")
             try:
                 os.remove(old_exe)
-            except Exception as e:
-                print(f"[-] Nota: No se pudo eliminar el .exe previo. ({e})")
+            except Exception:
+                pass
 
-        print("[!] Extrayendo y reemplazando con la nueva version...")
+        cprint("Extrayendo e instalando la nueva version...")
         with zipfile.ZipFile(zip_path, 'r') as z:
             z.extractall(app_dir)
             
-        print("[!] Refrescando cache de iconos de Windows...")
         try:
             ctypes.windll.shell32.SHChangeNotify(0x08000000, 0, None, None)
         except:
             pass
         
-        print("\\n[+] ¡Actualizacion completada con exito!")
-        print("[+] Iniciando DescarGato...")
+        print("\\n\\n")
+        cprint("==================================================")
+        cprint("¡ACTUALIZACION COMPLETADA CON EXITO!")
+        cprint("==================================================")
+        print("\\n")
+        cprint("Iniciando DescarGato...")
         time.sleep(2.5)
         
         target_exe = os.path.join(app_dir, exe_name)
         os.startfile(target_exe)
         
     except Exception as e:
-        print(f"\\n[X] ERROR CRITICO DURANTE LA ACTUALIZACION:")
-        print(f"    {e}")
-        print("\\nEsta ventana se cerrara en 15 segundos...")
+        print("\\n\\n")
+        cprint("ERROR CRITICO DURANTE LA ACTUALIZACION:")
+        cprint(str(e))
+        print("\\n")
+        cprint("Esta ventana se cerrara en 15 segundos...")
         time.sleep(15)
 
 if __name__ == '__main__':
