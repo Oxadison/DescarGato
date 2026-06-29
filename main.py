@@ -46,7 +46,7 @@ class StdoutRedirector:
 class DescarGatoApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("DescarGato - v1.0.7")
+        self.root.title("DescarGato - v1.0.8")
         try:
             self.root.iconbitmap(os.path.join(BASE_DIR, "icon.ico"))
         except Exception:
@@ -224,7 +224,7 @@ class DescarGatoApp:
 
     def ask_audio_preference(self):
         win = tk.Toplevel(self.root)
-        win.title("Elección de Formato")
+        win.title("Solo Audio")
         win.geometry("520x200")
         win.resizable(False, False)
         win.configure(bg="#f0f0f0")
@@ -441,7 +441,7 @@ class DescarGatoApp:
                     )
                 except Exception as e:
                     error_str = str(e)
-                    if "Requested format is not available" in error_str or "exit code" in error_str or "Error código 1" in error_str:
+                    if "Requested format is not available" in error_str or "exit code" in error_str or "El motor no pudo descargar este enlace." in error_str:
                         msg = "Formato nativo no encontrado. Activando Conversión Forzada (Esto puede tardar)..."
                         self.write_console(msg)
                         self.root.after(0, lambda: self.status_label.config(text="Convirtiendo…", fg=COLOR_WARN))
@@ -502,7 +502,7 @@ class DescarGatoApp:
 
             if has_update:
                 actualizar_app = messagebox.askyesno(
-                    "¡Nueva Versión Disponible!",
+                    "Actualizador",
                     f"¡Se ha encontrado la versión v{new_version} de DescarGato!\n\n"
                     "¿Deseas descargar e instalar la actualización ahora?\n\n"
                     "Nota: Esta acción actualizará el núcleo del programa y renovará "
@@ -520,10 +520,10 @@ class DescarGatoApp:
                     return
             else:
                 renovar_complementos = messagebox.askyesno(
-                    "Mantenimiento de Complementos",
+                    "Actualizador",
                     "DescarGato ya se encuentra en su última versión.\n\n"
-                    "Sin embargo, puedes realizar un mantenimiento preventivo de los motores de descarga.\n\n"
-                    "¿Deseas forzar la renovación de todos los complementos internos?"
+                    "Sin embargo, puedes realizar un mantenimiento de los motores de descarga.\n\n"
+                    "¿Deseas renovar todos los complementos internos?"
                 )
 
                 if not renovar_complementos:

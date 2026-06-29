@@ -14,7 +14,7 @@ import tempfile
 import ssl
 from pathlib import Path
 
-APP_VERSION = "1.0.7"
+APP_VERSION = "1.0.8"
 GITHUB_REPO = "Oxadison/DescarGato"
 
 APP_DIR = Path(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))))
@@ -659,7 +659,7 @@ def download_video(url, directory, progress_callback=None, download_format="best
 
             p.wait()
             if p.returncode != 0:
-                raise RuntimeError(f"Error código {p.returncode}.")
+                raise RuntimeError("El motor no pudo descargar este enlace.")
             
             for filename in os.listdir(temp_dir):
                 src_path = temp_dir / filename
